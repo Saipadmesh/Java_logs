@@ -1,4 +1,4 @@
-class Logs
+public class Logs
 {
 	Scanner input = new Scanner(System.in);
 	public int LogID;
