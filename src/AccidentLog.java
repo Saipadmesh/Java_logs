@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class AccidentLog extends Logs
 {
 	Scanner input = new Scanner(System.in);
