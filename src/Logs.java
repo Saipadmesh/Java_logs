@@ -1,3 +1,5 @@
+import java.time.LocalTime; 
+import java.time.LocalDate;
 public class Logs
 {
 	Scanner input = new Scanner(System.in);
