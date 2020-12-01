@@ -6,7 +6,7 @@ public class Map {
     static ArrayList<Road> Roads = new ArrayList<>();
     static ArrayList<Junction> Junctions = new ArrayList<>();
     static ArrayList<Police_Station> PoliceStations = new ArrayList<>();
-    static ArrayList<Traffic_Police> TrafficPolice = new ArrayList<>();
+    //static ArrayList<Traffic_Police> TrafficPolice = new ArrayList<>();
 
     public static Road return_road(int RID){
         for(int i=0;i<Roads.size();i++){
@@ -26,7 +26,8 @@ public class Map {
         return null;
     }
 
-    public static Traffic_Police return_police(int PID){
+    public static Traffic_Police return_police(Police_Station ps, int PID){
+        ArrayList<Traffic_Police> TrafficPolice = ps.Personnel;
         for(int i=0;i<TrafficPolice.size();i++){
             if(PID == TrafficPolice.get(i).PoliceID){
                 return TrafficPolice.get(i);
@@ -128,13 +129,14 @@ public class Map {
     }
 
     public static void deleteRoad(){
+        System.out.println("--------------------------");
+        System.out.println();
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Road ID : ");
         int RID = input.nextInt();
         input.close();
         Road rd = return_road(RID);
-        System.out.println("--------------------------");
-        System.out.println();
+
         if(rd == null){
             System.err.println("Road does not exist");
         }
@@ -147,13 +149,14 @@ public class Map {
     }
 
     public static void deleteJunction(){
+        System.out.println("--------------------------");
+        System.out.println();
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Junction ID : ");
         int JID = input.nextInt();
         input.close();
         Junction jn = return_jn(JID);
-        System.out.println("--------------------------");
-        System.out.println();
+
         if(jn == null){
             System.err.println("Junction does not exist");
         }
@@ -175,21 +178,22 @@ public class Map {
         String Name = input.next();
         System.out.println("Enter Pin Code : ");
         int pinCode = input.nextInt();
-        System.out.println("Enter Number of Personnel : ");
+        System.out.println("Enter Initial Number of Personnel : ");
         ArrayList<Traffic_Police> police = new ArrayList<>();
         int n = input.nextInt();
         int i = 0;
         while(i<n){
-            System.out.println("Enter Police ID : ");
-            int PID = input.nextInt();
-            Traffic_Police police1 = return_police(PID);
-            if(police1 == null){
+            /*System.out.println("Enter Police ID : ");
+            int PID = input.nextInt();*/
+            Traffic_Police police1 = addPolice();
+            /*if(police1 == null){
                 System.err.println("Personnel does not exist. Try again...");
             }
-            else{
+            else*/
+            //{
                 police.add(police1);
                 i++;
-            }
+            //}
 
         }
 
@@ -219,13 +223,14 @@ public class Map {
     }
 
     public static void deletePoliceStation(){
+        System.out.println("--------------------------");
+        System.out.println();
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Police Station ID : ");
         int SID = input.nextInt();
         input.close();
         Police_Station ps = return_police_station(SID);
-        System.out.println("--------------------------");
-        System.out.println();
+
         if(ps == null){
             System.err.println("Police Station does not exist");
         }
@@ -235,6 +240,54 @@ public class Map {
         }
         System.out.println();
         System.out.println("--------------------------");
+    }
+
+    public static Traffic_Police addPolice(){
+
+        System.out.print("Enter Police ID : ");
+        Scanner input = new Scanner(System.in);
+        int PID = input.nextInt();
+        System.out.print("Enter Name : ");
+        String Name = input.next();
+        System.out.print("Enter Age : ");
+        int age = input.nextInt();
+        System.out.print("Enter Salary : ");
+        int salary = input.nextInt();
+        System.out.print("Enter Years Of Experience : ");
+        int yoe = input.nextInt();
+        System.out.print("Enter Address : ");
+        String address = input.next();
+        input.close();
+        return new Traffic_Police(PID,Name,age,salary,yoe,address);
+    }
+
+    public static void deletePolice(){
+        System.out.println("--------------------------");
+        System.out.println();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter Police Station ID : ");
+        int SID = input.nextInt();
+        Police_Station ps = return_police_station(SID);
+        if(ps == null){
+            System.err.println("Police Station does not exist");
+        }
+        else{
+            System.out.println("Enter Police ID : ");
+            int pid = input.nextInt();
+            Traffic_Police police = return_police(ps,pid);
+            if(police == null){
+                System.out.println("Traffic Police does not exist");
+            }
+            else{
+                ps.Personnel.remove(police);
+            }
+            System.out.println("Police Successfully deleted");
+        }
+        System.out.println();
+        System.out.println("--------------------------");
+
+        input.close();
+
     }
 
     public static void listPolice(){
